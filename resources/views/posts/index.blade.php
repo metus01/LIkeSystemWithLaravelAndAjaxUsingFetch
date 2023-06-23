@@ -18,7 +18,7 @@
             <input type="hidden" name="" value="{{ $post->id }}" id="post-id-js">
             <button type="submit" class="btn btn-primary">J'aime</button>
         </form>
-        <p>{{ $post->content }}</p>
+        <p class="text text-dark">{{ $post->content }}</p>
         <br>
        @endforeach
     </div>
