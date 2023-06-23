@@ -15,8 +15,8 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
-    public function isLikedByLoggedUser()
+    public function isLikedByLoggedUser() : bool
     {
-        return $this->likes()->where('user_id' , auth()->user()->id)->isEmpty() ? false : true;
+        return $this->likes->where('user_id' , Auth::id())->isEmpty() ? false : true;
     }
 }

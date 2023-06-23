@@ -23,7 +23,7 @@ forms.forEach(form => {
                 )
             }).then(response => {
                 response.json().then(data => {
-                    console.log(data);
+                    count.innerHTML = data.count+ "Like(s)"
                 })
             })
             .catch(error => {

@@ -2405,7 +2405,7 @@ forms.forEach(function (form) {
       })
     }).then(function (response) {
       response.json().then(function (data) {
-        console.log(data);
+        count.innerHTML = data.count + "Like(s)";
       });
     })["catch"](function (error) {
       console.log(error);
