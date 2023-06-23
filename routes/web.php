@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,5 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PostController::class , 'index']);
+Route::get('/', [PostController::class , 'index'])->name('home');
 Route::post('/like' ,  [PostController::class , 'like'])->name('posts.like');
+Route::get('/login', [HomeController::class ,  'login']);
+Route::post('/login' , [HomeController::class , 'doLogin'])->name('login');

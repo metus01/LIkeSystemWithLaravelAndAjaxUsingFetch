@@ -2,8 +2,7 @@ const { error } = require("laravel-mix/src/Log");
 
 const forms = document.querySelectorAll('#form-js')
 forms.forEach(form => {
-    form.addEventListener('submit' , (event) =>
-    {
+    form.addEventListener('submit', (event) => {
         event.preventDefault();
         const url = form.action;
         const token = form._token.value;
@@ -13,13 +12,13 @@ forms.forEach(form => {
             {
                 headers:
                 {
-                    'Content-Type':'application/json',
-                    'x-CSRF-TOKEN':token
+                    'Content-Type': 'application/json',
+                    'x-CSRF-TOKEN': token
                 },
-                method:'POST',
-                body:JSON.stringify(
+                method: 'POST',
+                body: JSON.stringify(
                     {
-                        id : postId
+                        id: postId
                     }
                 )
             }).then(response => {
