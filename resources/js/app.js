@@ -1,3 +1,3 @@
 require('./bootstrap');
 
-require('./uploadfile');
+require('./like');

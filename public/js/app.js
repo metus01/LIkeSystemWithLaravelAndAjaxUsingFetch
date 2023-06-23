@@ -2338,7 +2338,7 @@ module.exports = {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-__webpack_require__(/*! ./uploadfile */ "./resources/js/uploadfile.js");
+__webpack_require__(/*! ./like */ "./resources/js/like.js");
 
 /***/ }),
 
@@ -2378,45 +2378,39 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/uploadfile.js":
-/*!************************************!*\
-  !*** ./resources/js/uploadfile.js ***!
-  \************************************/
+/***/ "./resources/js/like.js":
+/*!******************************!*\
+  !*** ./resources/js/like.js ***!
+  \******************************/
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
-  axios = _require["default"];
-var _require2 = __webpack_require__(/*! laravel-mix/src/Log */ "./node_modules/laravel-mix/src/Log.js"),
-  error = _require2.error;
-var handleUploadFile = function handleUploadFile(form) {
-  var data = new FormData(form);
-  axios.post(form.action, data).then(function (res) {
-    return console.log(res);
-  })["catch"](function (err) {
-    //reception des erreurs et traitement
-    //conversion de l'objet obtenu sous forme de tableau
-    var errors = Object.entries(err.response.data.errors);
-    //parcours des erreurs
-    for (var index = 0; index < errors.length; index++) {
-      // reception de chaque ligne de chaque tableau sous forme de ptits tableau format :clé-valeur
-      //insertion de l'erreur sous la champs récupéré au préalable à l'aide de l'identifiant.
-      var _errors$index = _slicedToArray(errors[index], 2);
-      key = _errors$index[0];
-      errorMessage = _errors$index[1];
-      document.getElementById(key).insertAdjacentHTML('afterend', "<div style=\"color:red;\">".concat(errorMessage[0], "</div>"));
-    }
+var _require = __webpack_require__(/*! laravel-mix/src/Log */ "./node_modules/laravel-mix/src/Log.js"),
+  error = _require.error;
+var forms = document.querySelectorAll('#form-js');
+forms.forEach(function (form) {
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var url = form.action;
+    var token = form._token.value;
+    var postId = form.querySelector("#post-id-js").value;
+    var count = form.querySelector("#count-js");
+    fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-CSRF-TOKEN': token
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        id: postId
+      })
+    }).then(function (response) {
+      response.json().then(function (data) {
+        console.log(data);
+      });
+    })["catch"](function (error) {
+      console.log(error);
+    });
   });
-};
-var form = document.getElementById('uploadForm');
-form.addEventListener('submit', function (event) {
-  event.preventDefault();
-  handleUploadFile(form);
 });
 
 /***/ }),
